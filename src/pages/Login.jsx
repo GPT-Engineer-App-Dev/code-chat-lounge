@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Container, VStack, Heading, Input, Button, Text, Box } from "@chakra-ui/react";
-import axios from "axios";
+
 
 const Login = () => {
   const [formData, setFormData] = useState({ email: "", password: "" });
@@ -12,7 +12,7 @@ const Login = () => {
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = async () => {
+  const handleSubmit = () => {
     setError("");
     setSuccess("");
     if (!formData.email || !formData.password) {
@@ -20,17 +20,16 @@ const Login = () => {
       return;
     }
 
-    try {
-      const response = await axios.post("/api/login", formData);
-      if (response.data.success) {
-        setSuccess("Login successful!");
-        setFormData({ email: "", password: "" });
-        // Handle user session here
-      } else {
-        setError(response.data.message || "Login failed.");
-      }
-    } catch (error) {
-      setError("An error occurred. Please try again.");
+    // Dummy credentials
+    const dummyEmail = "test@example.com";
+    const dummyPassword = "password123";
+
+    if (formData.email === dummyEmail && formData.password === dummyPassword) {
+      setSuccess("Login successful!");
+      setFormData({ email: "", password: "" });
+      // Handle user session here
+    } else {
+      setError("Invalid credentials.");
     }
   };
 
